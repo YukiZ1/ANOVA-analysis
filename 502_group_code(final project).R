@@ -1,5 +1,5 @@
 # -----------------------------
-# 📦 Step 0: 加载所需包
+# Step 0: 加载所需包
 # -----------------------------
 library(ggplot2)
 library(lme4)
@@ -10,7 +10,7 @@ library(car)
 library(ExpDes)
 
 # -----------------------------
-# 📌 Step 1: 读取与预处理数据
+# Step 1: 读取与预处理数据
 # -----------------------------
 url <- "https://users.stat.ufl.edu/~rrandles/sta4210/Rclassnotes/data/textdatasets/KutnerData/Appendix%20C%20Data%20Sets/APPENC06.txt"
 x <- read.table(url, header = FALSE)
@@ -18,7 +18,7 @@ x <- read.table(url, header = FALSE)
 colnames(x) <- c("ID", "WebsitesDelivered", "Backlog", "Team", "Experience", "ProcessChange", "Year", "Quarter")
 
 # -----------------------------
-# 🎯 Step 2: 构造分类变量（因子化）
+# Step 2: 构造分类变量（因子化）
 # -----------------------------
 x <- subset(x, !(Team %in% c(12))) # 删除 Team 12：仅包含低经验组，缺乏组内比较，违背 split-plot 思路
 
@@ -32,10 +32,10 @@ x$Team <- factor(x$Team)
 x$ProcessChange <- factor(x$ProcessChange)
 
 # -----------------------------
-# ✅ PART 1: BackGroup × ExpGroup 模型
+# PART 1: BackGroup × ExpGroup 模型
 # -----------------------------
 
-# 🔍 可视化：分组散点图
+# 可视化：分组散点图
 ggplot(x, aes(x = Backlog, y = WebsitesDelivered, color = Team)) +
   geom_point() +
   facet_wrap(~ ExpGroup) +
@@ -64,7 +64,7 @@ anova(model_exp_add)
 qqnorm(resid(model_exp_add)); qqline(resid(model_exp_add), col = 'red')
 
 # -----------------------------
-# ✅ PART 2: 考虑 ProcessChange（三因子交互）
+# PART 2: 考虑 ProcessChange（三因子交互）
 # -----------------------------
 
 # 数据结构检查
